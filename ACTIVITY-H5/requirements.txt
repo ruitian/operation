@@ -1,0 +1,7 @@
+Flask==0.11.1
+Flask-Alembic==2.0.1
+Flask-SQLAlchemy==2.1
+gunicorn==19.6.0
+python-editor==1.0.1
+redis==2.10.5
+SQLAlchemy==1.0.15
