@@ -20,7 +20,7 @@ def register_extensions(app):
     alembic.init_app(app)
 
 def register_blueprints(app):
-    app.register_blueprint(api_bp, url_prefix='/v1')
+    app.register_blueprint(api_bp, url_prefix='/cms-market')
 
 def create_app():
     app = Flask(
