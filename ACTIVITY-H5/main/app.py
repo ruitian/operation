@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 from flask import Flask
+from werkzeug.wsgi import SharedDataMiddleware
 
 from config import config
 from common import db, alembic, bp as api_bp
 
 
 __all__ = ['create_app']
+project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 def configure_app(app, config_name):
     if not config_name:
@@ -21,7 +23,13 @@ def register_blueprints(app):
     app.register_blueprint(api_bp, url_prefix='/v1')
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(project_path, 'static/static')
+    )
+    app.wsgi_app = SharedDataMiddleware(app.wsgi_app,{
+        '/': os.path.join(project_path, 'static')
+    })
     configure_app(app, config_name=None)
     register_extensions(app)
     register_blueprints(app)
