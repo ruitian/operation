@@ -1,22 +1,43 @@
 # -*- coding: utf-8 -*-
-from flask import current_app, json, request
-import urllib2
+from flask import current_app, request, jsonify
 from main.common.api import bp
+from main.common.api import APIStatus, RETStatus
+
+import time
+import urllib2
 
 class BaseController:
 
     @staticmethod
-    @bp.route('/check_token')
     def check_token(token=None):
+        try:
+            url = current_app.config['SERVICE_URL'] + 'account/user/tokenlogin'
+            resp = json.loads(urllib2.urlopen(url, data=token, timeout=15, ).read())
+        except Exception, e:
+            print str(e)
+        else:
+            return resp
 
-        token = request.args.get('token')
+    @staticmethod
+    def check_parma(self, parma=None):
 
-        return token + '123'
+        if parma is not None:
+            if type(parma) == dict:
+                pass
+            elif type(parma) == list:
+                pass
+            elif type(parma) == tuple:
+                pass
+        
+        return BaseController.back(RETStatus.PARMA_ERROR[0],
+                                   None,
+                                   RETStatus.PARMA_ERROR[2])
 
-        # try:
-        #     url = current_app.config['SERVICE_URL'] + 'account/user/tokenlogin'
-        #     resp = json.loads(urllib2.urlopen(url, data=token, timeout=15, ).read())
-        # except Exception, e:
-        #     print str(e)
-        # else:
-        #     return resp
+    @staticmethod
+    def back(ret, args=None, msg=None):
+
+        resp = {'content': args,
+                'msg': msg,
+                'ret': ret,
+                'ts' : time.time()}
+        return resp

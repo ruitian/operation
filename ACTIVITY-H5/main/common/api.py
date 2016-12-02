@@ -11,15 +11,17 @@ class APIStatus:
     NOT_FOUND = (404, 'Not_found')
     FORBIDDEN = (403, 'Forbidden')
 
-
 class RETStatus:
     OK = (0, '')
-    TIME_OUT = (1, '请求超时，请稍后重试')
-    REQUEST_TIME_OUT = (1, '网络请求超时')
-    DRAW_PLAY_NUMBER = (0, '今天的抽奖次数已用完')
-    FORGET_PARAM = (3, '又漏什么参数了?')
-    EXPIRE = (-1, '项目已下线')
-    NO_ACTIVITY = (-1, '没有该活动!')
+    TIME_OUT = (1000, '请求超时，请稍后重试')
+    REQUEST_TIME_OUT = (1001, '网络请求超时')
+    PARMA_ERROR = (1002, '参数错误')
+
+    DRAW_PLAY_NUMBER = (2000, '今天的抽奖次数已用完')
+    FORGET_PARAM = (2001, '又漏什么参数了?')
+    EXPIRE = (2002, '项目已下线')
+    NO_ACTIVITY = (2003, '没有该活动!')
+
 
 def jsonify_with_data(ret, args, status):
     resp = {'content': args, 'msg': ret[1], 'ret': ret[0]}

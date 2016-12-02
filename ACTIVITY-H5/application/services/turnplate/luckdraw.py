@@ -3,7 +3,6 @@ from flask import current_app, json
 import os
 import urllib2
 
-
 class LuckyDrawService(object):
 
     @staticmethod
