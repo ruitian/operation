@@ -10,7 +10,7 @@ remote_service_dir = '/home/work/dongbingwei'
 def update():
     with cd(remote_project_dir):
         print '正在更新代码..'
-        run('git pull origin master')
+        run('git pull origin zhangrui')
 
 def stop(server_name):
     with cd(remote_service_dir):
