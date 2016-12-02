@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
-from flask import current_app, json
+from flask import current_app, json, request
 import urllib2
 from main.common.api import bp
 
 class BaseController:
 
+    @staticmethod
     @bp.route('/check_token')
-    def check_token(token):
+    def check_token(token=None):
 
-        return '123'
+        token = request.args.get('token')
+
+        return token + '123'
 
         # try:
         #     url = current_app.config['SERVICE_URL'] + 'account/user/tokenlogin'
