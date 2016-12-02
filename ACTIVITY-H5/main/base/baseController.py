@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from flask import current_app, json
 import urllib2
+from main.common.api import bp
 
 class BaseController:
 
+    @bp.route('/check_token')
     def check_token(token):
         # account / user / tokenlogin
         try:
