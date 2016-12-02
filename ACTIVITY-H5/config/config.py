@@ -16,7 +16,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # 后端服务根URL
-    SERVICE_URL = 'http://qa2.market-api.wmdev2.lsh123.com'
+    SERVICE_URL = 'http://zs.market-api.wmdev2.lsh123.com'
     # 抽奖活动信息URL
     ACTIVITY_INFO_URL = SERVICE_URL + '/Operate/prize/getprizeinfo'
     # 抽奖根URL
