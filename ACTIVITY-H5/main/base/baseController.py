@@ -7,11 +7,13 @@ class BaseController:
 
     @bp.route('/check_token')
     def check_token(token):
-        # account / user / tokenlogin
-        try:
-            url = current_app.config['SERVICE_URL'] + 'account/user/tokenlogin'
-            resp = json.loads(urllib2.urlopen(url, data=token, timeout=15, ).read())
-        except Exception, e:
-            print str(e)
-        else:
-            return resp
+
+        return '123'
+
+        # try:
+        #     url = current_app.config['SERVICE_URL'] + 'account/user/tokenlogin'
+        #     resp = json.loads(urllib2.urlopen(url, data=token, timeout=15, ).read())
+        # except Exception, e:
+        #     print str(e)
+        # else:
+        #     return resp
