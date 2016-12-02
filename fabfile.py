@@ -5,7 +5,7 @@ env.hosts = [
     'work@192.168.60.59'
 ]
 
-remote_project_dir = '/home/work/dongbingwei/CMS-OPERATION'
+remote_project_dir = '/home/work/zhangrui/CMS-OPERATION'
 remote_service_dir = '/home/work/dongbingwei'
 def update():
     with cd(remote_project_dir):
