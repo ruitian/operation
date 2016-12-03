@@ -4,8 +4,8 @@ from flask import Flask
 from werkzeug.wsgi import SharedDataMiddleware
 
 from config import config
-from common import db, alembic, bp as api_bp
-
+from main.common import db, alembic
+from operation import activity as activity_bp
 
 __all__ = ['create_app']
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
@@ -20,7 +20,7 @@ def register_extensions(app):
     alembic.init_app(app)
 
 def register_blueprints(app):
-    app.register_blueprint(api_bp, url_prefix='/cms-market')
+    app.register_blueprint(activity_bp, url_prefix='/cms-market')
 
 def create_app():
     app = Flask(

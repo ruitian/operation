@@ -41,5 +41,3 @@ def bad_request(error):
 @bp.errorhandler(404)
 def not_found(error):
     return jsonify_with_error(APIStatus.NOT_FOUND)
-
-from application import *

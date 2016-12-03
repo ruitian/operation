@@ -3,6 +3,8 @@ from flask import current_app, json
 import os
 import urllib2
 
+__all__ = ['LuckyDrawService']
+
 class LuckyDrawService(object):
 
     @staticmethod
