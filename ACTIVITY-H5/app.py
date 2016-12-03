@@ -8,7 +8,8 @@ from main.common import db, alembic
 from operation import activity as activity_bp
 
 __all__ = ['create_app']
-project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+print project_path
 
 def configure_app(app, config_name):
     if not config_name:
