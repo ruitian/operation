@@ -5,6 +5,7 @@ __all__ = ['activity']
 
 activity = Blueprint('activity', __name__)
 
+
 # 加载活动主页
 @activity.route('/')
 def index():
@@ -13,4 +14,3 @@ def index():
 # 导出活动路由
 from turnplate import *  # noqa
 from shake import *  # noqa
-
