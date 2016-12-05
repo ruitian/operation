@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from werkzeug.contrib.fixers import ProxyFix
 from gevent import monkey
-from main import create_app
+from app import create_app
 
 
 # monkey.patch_all()
