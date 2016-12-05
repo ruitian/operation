@@ -29,10 +29,11 @@ def register_blueprints(app):
 def create_app():
     app = Flask(
         __name__,
-        template_folder=os.path.join(project_path, 'static/static')
+        template_folder=os.path.join(project_path, 'static/static'),
+        static_url_path='/cms-market'
     )
     app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
-        '/': os.path.join(project_path, 'static')
+        '/cms-market': os.path.join(project_path, 'static')
     })
     configure_app(app, config_name=None)
     register_extensions(app)
