@@ -6,7 +6,7 @@ import json
 #      APIStatus, RETStatus
 from service import LuckyDrawService
 from .. import activity
-from ...main import BaseService, APIStatus, RETStatus
+from main import BaseService, APIStatus, RETStatus
 @activity.route('/index')
 def operation():
     a = ['a']

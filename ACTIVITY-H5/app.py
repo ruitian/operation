@@ -30,7 +30,6 @@ def create_app():
     app = Flask(
         __name__,
         template_folder=os.path.join(project_path, 'static/static'),
-        static_url_path='/cms-market'
     )
     app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
         '/cms-market': os.path.join(project_path, 'static')
