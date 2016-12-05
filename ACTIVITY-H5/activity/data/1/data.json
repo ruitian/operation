@@ -1,0 +1,139 @@
+{
+  "header": {
+    "banner": "http://ygres.lsh123.com/509b713fd5d825aea20ad8@!common_medium"
+  },
+  "data": [
+    {
+      "static": {
+        "title": "",
+        "categoryId": "",
+        "url": "http://ygres.lsh123.com/82ad717c651b09c2e20bbb@!common_large"
+      },
+      "itemList": [
+        { "skuList": [100630], "replaceSkuList": [110310] },
+        { "skuList": [110300], "replaceSkuList": [100346] },
+        { "skuList": [104521], "replaceSkuList": [100442] },
+        { "skuList": [100416], "replaceSkuList": [101679] },
+        { "skuList": [102905], "replaceSkuList": [100126] },
+        { "skuList": [102835], "replaceSkuList": [102915] },
+        { "skuList": [100067], "replaceSkuList": [100129] },
+        { "skuList": [102911], "replaceSkuList": [102907] }
+      ],
+      "extendInfo": {
+        "100630": { "desc": "销量冠军" },
+        "110300": { "desc": "经典美味 跌破底价" },
+        "104521": { "desc": "疯抢爆款" },
+        "100416": { "desc": "店铺必备" },
+        "102905": { "desc": "原价：179" },
+        "102835": { "desc": "原价：188" },
+        "100067": { "desc": "惊爆热销" },
+        "102911": { "desc": "棉柔陈酿 畅销top" },
+        "110310": { "desc": "经典美味" },
+        "100346": { "desc": "疯抢爆款" },
+        "100442": { "desc": "舌尖上的美味" },
+        "101679": { "desc": "店铺必备" },
+        "100126": { "desc": "入口香醇" },
+        "102915": { "desc": "清香典范" },
+        "100129": { "desc": "惊爆热销" },
+        "102907": { "desc": "原装纯酿" }
+      }
+    },
+    {
+      "static": {
+        "categoryId": "",
+        "url": "http://ygres.lsh123.com/2fa8e1c52e5b81a89c9314@!common_large"
+      },
+      "itemList": [
+        { "skuList": [102913], "replaceSkuList": [106310] },
+        { "skuList": [106309], "replaceSkuList": [] }
+      ],
+      "extendInfo": {
+        "102913": { "desc": "棉柔陈酿 畅销top" },
+        "106309": { "desc": "保健养身 送礼必选" },
+        "106310": { "desc": "唯一销售平台" }
+      }
+    },
+    {
+      "static": {
+        "categoryId": "001011001",
+        "url": "http://ygres.lsh123.com/81e0b3291cf1753d417399@!common_large"
+      },
+      "itemList": [
+        { "skuList": [100271], "replaceSkuList": [110307] },
+        { "skuList": [100457], "replaceSkuList": [100347] },
+        { "skuList": [101613], "replaceSkuList": [110305] },
+        { "skuList": [100177], "replaceSkuList": [100285] }
+      ],
+      "extendInfo": {
+        "100271": { "desc": "低价疯卖" },
+        "100457": { "desc": "独一无二 店铺必备" },
+        "101613": { "desc": "经典好味 聪明之选" },
+        "100177": { "desc": "超值卤蛋" },
+        "110307": { "desc": "独一无二 店铺必备" },
+        "100347": { "desc": "经典好味 聪明之选" },
+        "110305": { "desc": "超值精选" },
+        "100285": { "desc": "疯抢爆款" }
+      }
+    },
+    {
+      "static": {
+        "categoryId": "",
+        "url": "http://ygres.lsh123.com/1289743c0411b955b08325@!common_large"
+      },
+      "itemList": [
+        { "skuList": [116896], "replaceSkuList": [105385] },
+        { "skuList": [102872], "replaceSkuList": [102823] },
+        { "skuList": [101416], "replaceSkuList": [106113] },
+        { "skuList": [101453], "replaceSkuList": [101839] }
+      ],
+      "extendInfo": {
+        "116896": { "desc": "卤香味浓" },
+        "102872": { "desc": "精选肉质" },
+        "101416": { "desc": "鲜香脆嫩" },
+        "101453": { "desc": "开味下饭" },
+        "105385": { "desc": "酸辣鲜香" },
+        "102823": { "desc": "精选肉质" },
+        "106113": { "desc": "开味下饭" },
+        "101839": { "desc": "入味十足" }
+      }
+    },
+    {
+      "static": {
+        "categoryId": "001016011",
+        "url": "http://ygres.lsh123.com/0bed20e74e777a86a9c51f@!common_large"
+      },
+      "itemList": [
+        { "skuList": [101518], "replaceSkuList": [116923] },
+        { "skuList": [116893], "replaceSkuList": [104260] },
+        { "skuList": [110380], "replaceSkuList": [110380] },
+        { "skuList": [100106], "replaceSkuList": [100664] }
+      ],
+      "extendInfo": {
+        "101518": { "desc": "麻辣香爽" },
+        "116893": { "desc": "十大火锅品牌" },
+        "101518": { "desc": "香辣过瘾" },
+        "100106": { "desc": "老北京味道" },
+        "116923": { "desc": "麻辣香爽" },
+        "104260": { "desc": "老北京味道" },
+        "110380": { "desc": "香辣过瘾 " },
+        "100664": { "desc": "冬日必备" }
+      }
+    },
+    {
+      "static": {
+        "categoryId": "001002004",
+        "url": "http://ygres.lsh123.com/fd7fb8f2c1c4c4324ab6b7@!common_large"
+      },
+      "itemList": [
+        { "skuList": [101372], "replaceSkuList": [100327] },
+        { "skuList": [103353], "replaceSkuList": [101350] }
+      ],
+      "extendInfo": {
+        "101372": { "desc": "经典畅销 营养补脑" },
+        "103353": { "desc": "营养精选 早餐必选" },
+        "100327": { "desc": "清新纯净 营养美味" },
+        "101350": { "desc": "经典畅销 营养补脑" }
+      }
+    }
+  ]
+}
