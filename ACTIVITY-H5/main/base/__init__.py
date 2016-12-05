@@ -1,2 +1,1 @@
-from .baseController import *
-from .test import *
+from .baseservice import BaseService

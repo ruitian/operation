@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, jsonify
-
-bp = Blueprint('api', __name__)
-
-
 class APIStatus:
     OK = (200, 'OK')
     BAD_REQUEST = (400, 'Bad_request')
@@ -21,23 +16,3 @@ class RETStatus:
     FORGET_PARAM = (2001, '又漏什么参数了?')
     EXPIRE = (2002, '项目已下线')
     NO_ACTIVITY = (2003, '没有该活动!')
-
-
-def jsonify_with_data(ret, args, status):
-    resp = {'content': args, 'msg': ret[1], 'ret': ret[0]}
-    return jsonify(resp), status[0]
-
-def jsonify_with_error(status, error=None):
-    resp = {'msg': status[1], 'ret': status[0]}
-    if error:
-        resp['error'] = error
-    return jsonify(resp)
-
-@bp.errorhandler(400)
-def bad_request(error):
-    return jsonify_with_error(APIStatus.BAD_REQUEST)
-
-
-@bp.errorhandler(404)
-def not_found(error):
-    return jsonify_with_error(APIStatus.NOT_FOUND)
