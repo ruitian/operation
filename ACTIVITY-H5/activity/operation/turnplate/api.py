@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from flask import current_app, request, jsonify
 import json
+import sys
+sys.path.append('..')
 
 # from main.common.api import bp, jsonify_with_data, jsonify_with_error, \
 #      APIStatus, RETStatus
 from service import LuckyDrawService
 from .. import activity
 from .. import BaseService, APIStatus, RETStatus
+
 @activity.route('/index')
 def operation():
     a = ['a']

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
-from flask import Flask
-from werkzeug.wsgi import SharedDataMiddleware
 
 from config import config
+from flask import Flask
 from main.common import db, alembic
 from operation import activity as activity_bp
+from werkzeug.wsgi import SharedDataMiddleware
 
 __all__ = ['create_app']
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '.'))
