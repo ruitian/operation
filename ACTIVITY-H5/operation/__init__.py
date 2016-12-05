@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template
 
-from main import BaseService, APIStatus, RETStatus
+from .. import BaseService, APIStatus, RETStatus
 
 __all__ = ['activity']
 
