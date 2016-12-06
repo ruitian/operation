@@ -1,33 +1,30 @@
 # -*- coding: utf-8 -*-
 from flask import current_app, request, jsonify
 import json
-import sys
-sys.path.append('..')
 
 # from main.common.api import bp, jsonify_with_data, jsonify_with_error, \
 #      APIStatus, RETStatus
-from service import LuckyDrawService
-from .. import activity
-from .. import BaseService, APIStatus, RETStatus
-
-@activity.route('/index')
-def operation():
-    a = ['a']
-    resp = BaseService.verify_param(a)
-    if hasattr(resp, '__call__'):
-        return resp(get)
-    return resp
-
-@activity.route('/token')
-def token():
-    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI5MzA2MDM5NzYzNTY4NTUyNzQiLCJjcmVhdGVkX2F0IjoxNDgwNjYyMDE2fQ.FSmm__ZupF8pK9fcpPG3S2AIJ0TUGKsbaorrXjXaj80'
-    resp = BaseService.check_token(token)
-    print resp
-    return resp
-
-def get(param):
-    return BaseService.jsonify_with_data(RETStatus.OK, param)
-# def number_to_func(arg):
+# from service import LuckyDrawService
+# from ..base_operation import ActivityAction, activity
+#
+# @activity.route('/index')
+# def operation():
+#     a = ['a']
+#     resp = BaseService.verify_param(a)
+#     if hasattr(resp, '__call__'):
+#         return resp(get)
+#     return resp
+#
+# @activity.route('/token')
+# def token():
+#     token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI5MzA2MDM5NzYzNTY4NTUyNzQiLCJjcmVhdGVkX2F0IjoxNDgwNjYyMDE2fQ.FSmm__ZupF8pK9fcpPG3S2AIJ0TUGKsbaorrXjXaj80'
+#     resp = BaseService.check_token(token)
+#     print resp
+#     return resp
+#
+# def get(param):
+#     return BaseService.jsonify_with_data(RETStatus.OK, param)
+# # def number_to_func(arg):
 #     switcher = {
 #         '1': 'get_static_data',
 #         '2': 'draw_prize',

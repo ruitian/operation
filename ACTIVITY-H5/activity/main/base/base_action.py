@@ -1,21 +1,27 @@
 # -*- coding: utf-8 -*-
 import urllib2
+import urllib
 from flask import current_app, jsonify, json
 
 from ..common import APIStatus, RETStatus
 
 
-class BaseService(object):
+class BaseAction(object):
 
     @staticmethod
     def check_token(token=None):
+        data = urllib.urlencode({
+            'token': token
+        })
         try:
             url = current_app.config['SERVICE_URL'] + '/account/user/tokenlogin'
-            resp = json.loads(urllib2.urlopen(url, data=token, timeout=15, ).read())
+            resp = json.loads(urllib2.urlopen(url, data=data, timeout=15).read())
         except Exception, e:
             print str(e)
         else:
-            return BaseService.jsonify_with_data(RETStatus.OK, resp)
+            if resp['ret'] != 0:
+                return None
+            return BaseAction.jsonify_with_data(resp['content'])
 
     @staticmethod
     def verify_param(param=None):
@@ -25,13 +31,15 @@ class BaseService(object):
                     return cb(param)
                 return callback
             else:
-                return BaseService.jsonify_with_data(RETStatus.PARMA_ERROR, '')
+                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
         else:
-            return BaseService.jsonify_with_data(RETStatus.PARMA_ERROR, '')
+            return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
 
     @staticmethod
-    def jsonify_with_data(ret, args, status=None):
-        resp = {'content': args, 'msg': ret[1], 'ret': ret[0]}
+    def jsonify_with_data(args, ret=None, status=None):
+        if ret is None:
+            ret = RETStatus.OK
         if status is None:
             status = APIStatus.OK
+        resp = {'content': args, 'msg': ret[1], 'ret': ret[0]}
         return jsonify(resp), status[0]
