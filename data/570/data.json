@@ -1,0 +1,62 @@
+{
+  "name": "周年庆摇一摇",
+  "start_time": 1400232322,
+  "end_time": 1454454543,
+  "home_pic": {
+    "bg": "http://ygres.lsh123.com/d7e5456faca1143dd8ef0d",
+    "shake": "http://ygres.lsh123.com/d7e5456faca1143dd8ef0d"
+  },
+  "play_setting": {
+    "play_count_user": 3,
+    "play_count_add": 1
+  },
+  "desc": "活动描述",
+  "rules": "规则",
+  "limits": {
+    "zone_id": 1000
+  },
+  "prize": [
+    {
+      "type": "4",
+      "item": "0",
+      "num": "10",
+      "name": "手机",
+      "pic": "手机图片",
+      "desc": "一等奖"
+    },
+    {
+      "type": "2",
+      "item": "100",
+      "num": "10",
+      "name": "100元现金券",
+      "pic": "",
+      "desc": "二等奖"
+    },
+    {
+      "type": "2",
+      "item": "20",
+      "num": "10",
+      "name": "20元现金券",
+      "pic": "",
+      "desc": "三等奖"
+    },
+    {
+      "type": "2",
+      "item": "1",
+      "num": "10",
+      "name": "1元现金券",
+      "pic": "",
+      "desc": "四等奖"
+    }
+  ],
+  "result": {
+    "success": {
+      "tip": "厉害了我的老板",
+      "pic": ""
+    },
+    "fail": {
+      "tip": "没有抽中，再接再厉",
+      "pic": ""
+    }
+  }
+}

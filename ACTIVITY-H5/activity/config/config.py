@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../..')
+)
 
 
 class Config(object):
@@ -41,6 +43,7 @@ class DevelopmentConfig(Config):
     MONGO_HOST = '127.0.0.1'
     MONGO_PORT = 27017
     MONGO_DBNAME = 'cms'
+
 
 class TestingConfig(Config):
     DEBUG = True

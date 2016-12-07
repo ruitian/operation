@@ -21,10 +21,10 @@ class BaseAction(object):
         else:
             if resp['ret'] != 0:
                 return None
-            return BaseAction.jsonify_with_data(resp['content'])
+            return resp['content']
 
     @staticmethod
-    def verify_param(param=None):
+    def check_param(param=None):
         if param is not None:
             if type(param) == dict or type(param) == list or type(param) == tuple:
                 def callback(cb):
