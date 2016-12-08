@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask import current_app as app, jsonify, json
-import urllib, urllib2
+import urllib2
 import os
+import time
+import random
 __all__ = ['ShakeService']
 
 # 获取抽奖次数的url
@@ -20,17 +22,6 @@ false = False
 
 class ShakeService(object):
 
-    # def __init__(self, shake_num_url, shake_play_url, shake_my_prize_url):
-    #
-    #     # 获取抽奖次数的url
-    #     self.shake_num_url = shake_num_url
-    #
-    #     # 获取抽奖接口的url
-    #     self.shake_play_url = shake_play_url
-    #
-    #     # 获取我的奖品的url
-    #     self.shake_my_prize_url = shake_my_prize_url
-
     def get_static_data(self, activity_id, uid):
         file_folder = app.config['DATA_JSON']+activity_id
         if os.path.exists(file_folder):
@@ -38,9 +29,12 @@ class ShakeService(object):
                 data = json.load(static_file)
             # 添加一些额外的信息
             user_draw_info = self.get_user_draw_info(activity_id, uid)
-            data['today_times'] = user_draw_info['today_times']
-            data['all_times'] = user_draw_info['all_times']
-            data['name'] = user_draw_info['name']
+            data['user_info'] = {
+                "today_times": user_draw_info['today_times'],
+                "all_times": user_draw_info['all_times'],
+                "name": user_draw_info['name'],
+                "zone_id": user_draw_info['zone_id']
+            }
             return json.dumps(data)
         else:
             return json.dumps({
@@ -49,20 +43,16 @@ class ShakeService(object):
             })
 
     def get_user_draw_info(self, activity_id, uid):
-        data = urllib.urlencode({
-            'uid': uid,
-            'activity_id': activity_id
-        })
-        url = app.config['SERVICE_URL'] + SHAKE_NUM_URL
-        return self._request_url(url, data)
+
+        url = app.config['SERVICE_URL'] + SHAKE_NUM_URL + \
+              '?activity_id=%s&uid=%s' % (activity_id, uid)
+        return self._request_url(url)
 
     def shake_play(self, activity_id, uid):
-        data = urllib.urlencode({
-            'uid': uid,
-            'activity_id': activity_id
-        })
-        url = app.config['SERVICE_URL'] + SHAKE_PLAY_URL
-        resp = self._request_url(url, data)
+
+        url = app.config['SERVICE_URL'] + SHAKE_PLAY_URL +\
+              '?activity_id=%s&uid=%s' % (activity_id, uid)
+        resp = self._request_url(url)
         if resp['got']:
             type = resp['prize']['type']
             item = resp['prize']['item']
@@ -86,12 +76,17 @@ class ShakeService(object):
         }
         return prize_info
 
-    def _request_url(self, url, data):
+    def _request_url(self, url):
+        a = random.randint(1, 10)
+        with open(app.config['LOG_FILE'] + 'test.log', 'a') as f:
+            f.write('开始请求' + str(a) + ' ' + str(time.ctime()) + '\n')
         try:
-            resp = json.loads(urllib2.urlopen(url, data=data, timeout=15).read())
+            resp = json.loads(urllib2.urlopen(url, timeout=15).read())
         except Exception, e:
             print str(e)
         else:
+            with open(app.config['LOG_FILE'] + 'test.log', 'a') as f:
+                f.write('结束请求' + str(a) + ' ' + str(time.ctime()) + '\n')
             if resp['ret'] != 0:
                 return None
             else:

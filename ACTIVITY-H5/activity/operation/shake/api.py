@@ -5,7 +5,6 @@ from ..base_operation import activity
 from .. import BaseAction, RETStatus
 from .service import ShakeService
 
-
 @activity.route('/check_token', methods=['GET', 'POST'])
 def check():
     if request.method == 'POST':

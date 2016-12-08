@@ -5,11 +5,15 @@ BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '../../..')
 )
 
+LOG_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '../../')
+)
 
 class Config(object):
 
     # json upload
     DATA_JSON = BASE_DIR + '/data/'
+    LOG_FILE = LOG_DIR + '/log/'
 
     SECRET_KEY = 'NGUzMjc0MjBiYzQxMjkyZTgyZTk5ZTA2MDg2MDU1NDsd'
 
