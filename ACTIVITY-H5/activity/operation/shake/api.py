@@ -29,6 +29,8 @@ def shake():
 @activity.route('/shake/static', methods=['GET', 'POST'])
 def get_shake_static_data():
     shake_service = ShakeService()
+    if type(_get_param()) == tuple:
+        return _get_param()
     activity_id, uid = _get_param()
     # 获取静态数据
     static_resp = shake_service.get_static_data(activity_id, uid)
@@ -42,6 +44,8 @@ def get_shake_static_data():
 @activity.route('/shake/play', methods=['GET', 'POST'])
 def shake_play():
     shake_service = ShakeService()
+    if type(_get_param()) == tuple:
+        return _get_param()
     activity_id, uid = _get_param()
     # 获取抽奖结果
     play_resp = shake_service.shake_play(activity_id, uid)
@@ -53,9 +57,14 @@ def shake_count():
 
 def _get_param():
     if request.method == 'POST':
+        # 验证请求参数的个数
+        if len(request.form) != 2:
+            return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
         activity_id = request.form['activity_id']
         token = request.form['token']
     else:
+        if len(request.args) != 2:
+            return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
         activity_id = request.args.get('activity_id')
         token = request.args.get('token')
     # 验证token
@@ -64,8 +73,7 @@ def _get_param():
         return BaseAction.jsonify_with_data('', RETStatus.TOKEN_ERROR)
     # 解析token后，获取uid
     uid = user_info['useraccount']['uid']
-    # 验证参数
-    params = list(request.form)
-    if len(params) != 2 or len(activity_id) == 0 or len(token) == 0:
+    # 验证参数中的值是否为空
+    if len(activity_id) == 0 or len(token) == 0:
         return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
-    return activity_id, uid
+    return [activity_id, uid]
