@@ -7,7 +7,7 @@ import random
 __all__ = ['ShakeService']
 
 # 获取抽奖次数的url
-SHAKE_NUM_URL = '/Operate/prize/getUserDrawInfos'
+SHAKE_NUM_URL = '/Operate/prize/getusershakeinfo'
 
 # 获取抽奖接口的url
 SHAKE_PLAY_URL= '/Operate/prize/shake'
@@ -29,17 +29,22 @@ class ShakeService(object):
                 data = json.load(static_file)
             # 添加一些额外的信息
             user_draw_info = self.get_user_draw_info(activity_id, uid)
-            data['user_info'] = {
-                "today_times": user_draw_info['today_times'],
-                "all_times": user_draw_info['all_times'],
-                "name": user_draw_info['name'],
-                "zone_id": user_draw_info['zone_id']
-            }
-            return json.dumps(data)
+            if user_draw_info['activity'] == 'yes':
+                data['user_info'] = {
+                    "today_times": user_draw_info['today_shake_times'],
+                    "name": user_draw_info['name'],
+                    "zone_id": user_draw_info['zone_id']
+                }
+                return json.dumps(data)
+            else:
+                return json.dumps({
+                    'type': 2,
+                    'none': True
+                })
         else:
             return json.dumps({
                 'type': 1,
-                "none": True
+                'none': True
             })
 
     def get_user_draw_info(self, activity_id, uid):

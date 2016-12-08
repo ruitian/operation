@@ -37,6 +37,8 @@ def get_shake_static_data():
     if 'none' in static_resp and static_resp['none'] is True:
         if static_resp['type'] == 1:
             return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY)
+        if static_resp['type'] == 2:
+            return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY)
     resp = make_response(BaseAction.jsonify_with_data(static_resp))
     resp.set_cookie('token', token)
     return resp
