@@ -13,7 +13,7 @@ SHAKE_NUM_URL = '/Operate/prize/getusershakeinfo'
 SHAKE_PLAY_URL= '/Operate/prize/shake'
 
 # 获取我的奖品的url
-SHAKE_MY_PRIZE_URL = '/'
+SHAKE_MY_PRIZE_URL = '/Operate/prize/getUserDrawHistory'
 
 # 转义
 true = True
@@ -58,7 +58,7 @@ class ShakeService(object):
         url = app.config['SERVICE_URL'] + SHAKE_PLAY_URL +\
               '?activity_id=%s&uid=%s' % (activity_id, uid)
         resp = self._request_url(url)
-        if resp['got']:
+        if 'got' in resp and resp['got']:
             type = resp['prize']['type']
             item = resp['prize']['item']
             # 从静态数据中读取奖品信息
@@ -80,6 +80,31 @@ class ShakeService(object):
             'got': 2,
         }
         return prize_info
+
+    # 获取我的奖品
+    def get_my_prize(self, activity_id, uid):
+        my_prizes = []
+        file_folder = app.config['DATA_JSON'] + activity_id
+        if os.path.exists(file_folder):
+            with open(file_folder + '/data.json') as static_file:
+                static_data = json.load(static_file)
+            url = app.config['SERVICE_URL'] + SHAKE_MY_PRIZE_URL + \
+                  '?activity_id=%s&uid=%s' % (activity_id, uid)
+            static_prizes = static_data['prize']
+            prizes = self._request_url(url)['history']
+            for prize in prizes:
+                for info in static_prizes:
+                    if prize['type'] == info['type'] and prize['item'] == info['item']:
+                        prize_info = {
+                            'name': info['name'],
+                            'pic': info['pic'],
+                            'desc': info['desc']
+                        }
+                my_prizes.append(prize_info)
+            return my_prizes
+        else:
+            return None
+
 
     def _request_url(self, url):
         a = random.randint(1, 10)

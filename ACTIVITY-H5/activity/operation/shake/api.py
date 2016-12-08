@@ -55,6 +55,17 @@ def shake_play():
     return BaseAction.jsonify_with_data(play_resp)
 
 
+@activity.route('/shake/my', methods=['GET', 'POST'])
+def get_my_prize():
+    shake_service = ShakeService()
+    if type(_get_param()) == tuple:
+        return _get_param()
+    activity_id, uid, token = _get_param()
+    my_prize = shake_service.get_my_prize(activity_id, uid)
+    if my_prize is None:
+        return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY)
+    return BaseAction.jsonify_with_data(my_prize)
+
 def _get_param():
     # 在cookie中获取token
     token = request.cookies.get('token')
