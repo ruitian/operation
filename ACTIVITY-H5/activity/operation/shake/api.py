@@ -86,12 +86,8 @@ def _get_param():
     # cookie中含有token只获取activity_id
     else:
         if request.method == "POST":
-            if len(request.form) != 1:
-                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
             activity_id = request.form['activity_id']
         else:
-            if len(request.args) != 1:
-                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
             activity_id = request.args.get('activity_id')
     # 验证token
     user_info = BaseAction.check_token(token)

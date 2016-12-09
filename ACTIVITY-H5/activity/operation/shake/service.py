@@ -107,16 +107,19 @@ class ShakeService(object):
 
 
     def _request_url(self, url):
-        a = random.randint(1, 10)
-        with open(app.config['LOG_FILE'] + 'test.log', 'a') as f:
-            f.write('开始请求' + str(a) + ' ' + str(time.ctime()) + '\n')
+        # 开始向后台接口发起请求的时间
+        start_time = time.time()
         try:
             resp = json.loads(urllib2.urlopen(url, timeout=15).read())
         except Exception, e:
             print str(e)
         else:
-            with open(app.config['LOG_FILE'] + 'test.log', 'a') as f:
-                f.write('结束请求' + str(a) + ' ' + str(time.ctime()) + '\n')
+            # 将请求信息写入log
+            process_time = time.time() - start_time
+            urllib2_log = app.config['LOG_FILE'] + 'urllib2.log'
+            with open(urllib2_log, 'a') as f:
+                f.write(str(time.ctime()) + ' ' + url + ' ' + str(process_time) + '\n')
+
             if resp['ret'] != 0:
                 return None
             else:
