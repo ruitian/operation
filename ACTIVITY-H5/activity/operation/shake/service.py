@@ -28,14 +28,14 @@ class ShakeService(object):
             with open(file_folder+'/data.json') as static_file:
                 data = json.load(static_file)
             # 添加一些额外的信息
-            user_draw_info = self.get_user_draw_info(activity_id, uid)
+            user_draw_info, timestamp = self.get_user_draw_info(activity_id, uid)
             if user_draw_info['activity'] == 'yes':
                 data['user_info'] = {
                     "today_times": user_draw_info['today_shake_times'],
                     "name": user_draw_info['name'],
                     "zone_id": user_draw_info['zone_id']
                 }
-                return json.dumps(data)
+                return json.dumps(data), timestamp
             else:
                 return json.dumps({
                     'type': 2,
@@ -57,7 +57,7 @@ class ShakeService(object):
 
         url = app.config['SERVICE_URL'] + SHAKE_PLAY_URL +\
               '?activity_id=%s&uid=%s' % (activity_id, uid)
-        resp = self._request_url(url)
+        resp, timestamp = self._request_url(url)
         if 'got' in resp and resp['got']:
             type = resp['prize']['type']
             item = resp['prize']['item']
@@ -79,11 +79,12 @@ class ShakeService(object):
         prize_info = {
             'got': 2,
         }
-        return prize_info
+        return prize_info, timestamp
 
     # 获取我的奖品
     def get_my_prize(self, activity_id, uid):
         my_prizes = []
+        timestamp = int(str(time.time()).split('.')[0])
         file_folder = app.config['DATA_JSON'] + activity_id
         if os.path.exists(file_folder):
             with open(file_folder + '/data.json') as static_file:
@@ -91,7 +92,8 @@ class ShakeService(object):
             url = app.config['SERVICE_URL'] + SHAKE_MY_PRIZE_URL + \
                   '?activity_id=%s&uid=%s' % (activity_id, uid)
             static_prizes = static_data['prize']
-            prizes = self._request_url(url)['history']
+            prizes, timestamp = self._request_url(url)
+            prizes = prizes['history']
             for prize in prizes:
                 for info in static_prizes:
                     if prize['type'] == info['type'] and prize['item'] == info['item']:
@@ -101,9 +103,9 @@ class ShakeService(object):
                             'desc': info['desc']
                         }
                 my_prizes.append(prize_info)
-            return my_prizes
+            return my_prizes, timestamp
         else:
-            return None
+            return None, timestamp
 
 
     def _request_url(self, url):
@@ -123,4 +125,4 @@ class ShakeService(object):
             if resp['ret'] != 0:
                 return None
             else:
-                return resp['content']
+                return resp['content'], resp['timestamp']

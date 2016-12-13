@@ -47,10 +47,10 @@ class BaseAction(object):
             return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
 
     @staticmethod
-    def jsonify_with_data(args, ret=None, status=None):
+    def jsonify_with_data(args, ret=None, status=None, timestamp=None):
         if ret is None:
             ret = RETStatus.OK
         if status is None:
             status = APIStatus.OK
-        resp = {'content': args, 'msg': ret[1], 'ret': ret[0]}
+        resp = {'content': args, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
         return jsonify(resp), status[0]
