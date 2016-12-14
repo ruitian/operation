@@ -51,9 +51,9 @@ def shake_play():
         return _get_param()
     activity_id, uid, token = _get_param()
     # 获取抽奖结果
+   
     play_resp, timestamp = shake_service.shake_play(activity_id, uid)
     return BaseAction.jsonify_with_data(play_resp, timestamp=timestamp)
-
 
 @activity.route('/shake/my', methods=['GET', 'POST'])
 def get_my_prize():

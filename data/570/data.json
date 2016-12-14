@@ -1,7 +1,8 @@
 {
   "name": "周年庆摇一摇",
+  "activity_id": 570,
   "start_time": 1400232322,
-  "end_time": 1454454543,
+  "end_time": 1481775132,
   "home_pic": {
     "bg": "http://ygres.lsh123.com/c794f22688ec09887cec5f",
     "shake": "http://ygres.lsh123.com/d7e5456faca1143dd8ef0d",
@@ -12,9 +13,9 @@
     "play_count_add": 1
   },
   "desc": "活动描述",
-  "rules": "规则",
+  "rules": "1、活动时间：12.28—12.30，共3天；<br>2、摇奖机会：活动期间，每个账号每日基础摇奖次数为2次，若每日连续登录链商优供，则摇奖次数可累加；<br>3、奖品设置：奖品分为4个等级,详情如下：<table><tr><td>等级</td><td>名</td><td>奖品设置</td></tr><tr><td>一等奖</td><td>3</td><td>Apple iPad mini 2 平板电脑</td></tr><tr><td>二等奖</td><td>10</td><td>Apple iPad mini 2 平板电脑</td></tr><tr><td>三等奖</td><td>50</td><td>康师傅包装饮用水</td></tr><tr><td>四等奖</td><td>9000</td><td>1元现金券</td></tr></table>4、奖品发放：实物奖品将在活动结束3个工作日内有客服联系确认中奖用户信息进行奖品邮寄，请相关用户保持手机开机；现金券将自动发放到中奖用户账户，请于“我的-现金券”页面进行核查！",
   "limits": {
-    "zone_id": 1000
+    "zone_id": [1000]
   },
   "prize": [
     {

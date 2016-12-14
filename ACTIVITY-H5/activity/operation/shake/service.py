@@ -54,7 +54,6 @@ class ShakeService(object):
         return self._request_url(url)
 
     def shake_play(self, activity_id, uid):
-
         url = app.config['SERVICE_URL'] + SHAKE_PLAY_URL +\
               '?activity_id=%s&uid=%s' % (activity_id, uid)
         resp, timestamp = self._request_url(url)
@@ -68,14 +67,13 @@ class ShakeService(object):
             prizes = static_data['prize']
             for prize in prizes:
                 if prize['type'] == type and prize['item'] == item:
-                    break
-            prize_info = {
-                'got': 1,
-                'name': prize['name'],
-                'pic': prize['pic'],
-                'desc': prize['desc']
-            }
-            return prize_info
+                    prize_info = {
+                        'got': 1,
+                        'name': prize['name'],
+                        'pic': prize['pic'],
+                        'desc': prize['desc']
+                    }
+                    return prize_info, timestamp
         prize_info = {
             'got': 2,
         }
