@@ -15,6 +15,9 @@ SHAKE_PLAY_URL= '/Operate/prize/shake'
 # 获取我的奖品的url
 SHAKE_MY_PRIZE_URL = '/Operate/prize/getUserDrawHistory'
 
+# 获取中奖信息的url
+SHAKE_Shake_Infos_URL = '/Operate/prize/getPrizeShakeInfos'
+
 # 转义
 true = True
 false = False
@@ -105,6 +108,12 @@ class ShakeService(object):
         else:
             return None, timestamp
 
+    # 获取中奖信息
+    def get_prize_shake_infos(self, activity_id, type, item):
+        url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
+              '?activity_id=%s&type=%s&item=%s' % (activity_id, type, item)
+        resp, timestamp = self._request_url(url)
+        return resp
 
     def _request_url(self, url):
         # 开始向后台接口发起请求的时间
