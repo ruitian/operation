@@ -138,7 +138,7 @@ class ShakeService(object):
                 for prize_info in data['prize']:
                     if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
                         show_prize['prize'] = prize_info['name']
-                show_prizes.append(show_prize)
+            show_prizes.append(show_prize)
 
         return show_prizes
 
