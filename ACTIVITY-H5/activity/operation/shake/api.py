@@ -39,10 +39,6 @@ def get_shake_static_data():
             return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY)
         if static_resp['type'] == 2:
             return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY)
-
-    shake_info = shake_service.get_prize_shake_infos(activity_id, 3, 1)
-    static_resp['shake_info'] = shake_info
-
     resp = make_response(BaseAction.jsonify_with_data(static_resp, timestamp=timestamp))
     resp.set_cookie('token', token)
     return resp

@@ -31,6 +31,7 @@ class ShakeService(object):
             with open(file_folder+'/data.json') as static_file:
                 data = json.load(static_file)
             # 添加一些额外的信息
+            # 用户抽奖的信息
             user_draw_info, timestamp = self.get_user_draw_info(activity_id, uid)
             if user_draw_info['activity'] == 'yes':
                 data['user_info'] = {
@@ -38,6 +39,7 @@ class ShakeService(object):
                     "name": user_draw_info['name'],
                     "zone_id": user_draw_info['zone_id']
                 }
+                data['show_prizes'] = self._get_prize_shake_infos(activity_id)
                 return json.dumps(data), timestamp
             else:
                 return json.dumps({
@@ -108,12 +110,32 @@ class ShakeService(object):
         else:
             return None, timestamp
 
-    # 获取中奖信息
-    def get_prize_shake_infos(self, activity_id, type, item):
-        url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
-              '?activity_id=%s&type=%s&item=%s' % (activity_id, type, item)
-        resp, timestamp = self._request_url(url)
-        return resp
+    # 获取一等奖中奖信息
+    def _get_prize_shake_infos(self, activity_id):
+
+        # 展示奖品列表
+        show_prizes = []
+        # 获取配置信息
+        file_folder = app.config['DATA_JSON']+activity_id
+        with open(file_folder + '/data.json') as static_file:
+            data = json.load(static_file)
+
+        # 展示将品奖配置
+        for prize in  data['show_prizes']:
+            url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
+                  '?activity_id=%s&type=%s&item=%s' % (activity_id, prize['type'], prize['item'])
+            resp, timestamp = self._request_url(url)
+            for prize in resp['list']:
+                show_prize = {
+                    'time': int(prize['time']),
+                    'phone': prize['cellphone'],
+                    'name': prize['name']
+                }
+            for prize_info in data['prize']:
+                if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
+                    show_prize['prize'] = prize_info['name']
+            show_prizes.append(show_prize)
+        return show_prizes
 
     def _request_url(self, url):
         # 开始向后台接口发起请求的时间

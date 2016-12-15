@@ -22,7 +22,7 @@
       "type": "4",
       "item": "0",
       "num": "10",
-      "name": "手机",
+      "name": "红米Note4",
       "pic": "手机图片",
       "desc": "一等奖"
     },
@@ -49,6 +49,12 @@
       "name": "1元现金券",
       "pic": "",
       "desc": "四等奖"
+    }
+  ],
+  "show_prizes": [
+    {
+      "item": 0,
+      "type": 4
     }
   ],
   "result": {
