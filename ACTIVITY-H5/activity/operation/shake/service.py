@@ -121,20 +121,25 @@ class ShakeService(object):
             data = json.load(static_file)
 
         # 展示将品奖配置
-        for prize in  data['show_prizes']:
+
+        for prize in data['show_prizes']:
             url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
                   '?activity_id=%s&type=%s&item=%s' % (activity_id, prize['type'], prize['item'])
             resp, timestamp = self._request_url(url)
+
+
             for prize in resp['list']:
                 show_prize = {
                     'time': int(prize['time']),
                     'phone': prize['cellphone'],
-                    'name': prize['name']
+                    'name': prize['name'],
+                    'prize': ''
                 }
-            for prize_info in data['prize']:
-                if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
-                    show_prize['prize'] = prize_info['name']
-            show_prizes.append(show_prize)
+                for prize_info in data['prize']:
+                    if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
+                        show_prize['prize'] = prize_info['name']
+                show_prizes.append(show_prize)
+
         return show_prizes
 
     def _request_url(self, url):
