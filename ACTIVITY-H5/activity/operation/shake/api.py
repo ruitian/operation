@@ -77,18 +77,36 @@ def _get_param():
                 return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
             activity_id = request.form['activity_id']
             token = request.form['token']
+            # 验证参数是否为空
+            if len(token) == 0:
+                return BaseAction.jsonify_with_data('', RETStatus.TOKEN_NONE)
+            if len(activity_id) == 0:
+                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
+
         else:
             if len(request.args) != 2:
                 return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
             activity_id = request.args.get('activity_id')
             token = request.args.get('token')
+            # 验证参数是否为空
+            if len(token) == 0:
+                return BaseAction.jsonify_with_data('', RETStatus.TOKEN_NONE)
+            if len(activity_id) == 0:
+                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
+
 
     # cookie中含有token只获取activity_id
     else:
         if request.method == "POST":
             activity_id = request.form['activity_id']
+            # 验证活动id是否为空
+            if len(activity_id) == 0:
+                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
         else:
             activity_id = request.args.get('activity_id')
+            # 验证活动id是否为空
+            if len(activity_id) == 0:
+                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
     # 验证token
     user_info = BaseAction.check_token(token)
     if user_info is None:

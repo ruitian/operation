@@ -24,3 +24,5 @@ class RETStatus:
     EXPIRE = (2002, '项目已下线')
     NO_ACTIVITY = (2003, '没有该活动!')
     TOKEN_ERROR = (2004, 'token验证失败')
+    TOKEN_NONE = (-1000, 'token为空')
+    ACTIVITY_NONE = (-1001, '活动id为空')
