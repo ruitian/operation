@@ -79,9 +79,14 @@ class ShakeService(object):
                         'desc': prize['desc']
                     }
                     return prize_info, timestamp
-        prize_info = {
-            'got': 2,
-        }
+        if 'draw' in resp and resp['draw'] == 2:
+            prize_info = {
+                'got': 3
+            }
+        else:
+            prize_info = {
+                'got': 2,
+            }
         return prize_info, timestamp
 
     # 获取我的奖品
