@@ -36,7 +36,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     # mysql
-    SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost/active'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost/lsh_cms'
     # mongodb
     MONGO_HOST = '127.0.0.1'
     MONGO_PORT = 27017
