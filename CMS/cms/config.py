@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from datetime import timedelta
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -8,6 +9,9 @@ class Config(object):
 
     # json upload
     DATA_JSON = BASE_DIR + '/data/'
+    LOG_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '..'
+    ))
 
     SECRET_KEY = 'NGUzMjc0MjBiYzQxMjkyZTgyZTk5ZTA2MDg2MDU1NDsd'
 
@@ -16,21 +20,17 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # 后端服务根URL
-    SERVICE_URL = 'http://qa2.market-api.wmdev2.lsh123.com'
-    # 抽奖活动信息URL
-    ACTIVITY_INFO_URL = SERVICE_URL + '/Operate/prize/getprizeinfo'
-    # 抽奖根URL
-    DRAW_URL = SERVICE_URL + '/Operate/prize/draw'
-    # 当前用户抽奖信息URL
-    USER_DRAWINFO_URL = SERVICE_URL + '/Operate/prize/getUserDrawInfos'
-    # 总排行榜URL
-    RANKING_URL = SERVICE_URL + "/Operate/prize/getrank"
-    # 当前用户排名情况
-    USER_RANKING_URL = SERVICE_URL + "/Operate/prize/getuserrank"
+    SERVICE_URL = 'http://zs.market-api.wmdev2.lsh123.com'
+
     # alembic
     ALEMBIC = {
         'script_location': 'alembic'
     }
+
+    # cookie 信息
+    COOKIE_NAME = 'remember_token'
+    COOKIE_SECURE = None
+    COOKIE_DURATION = timedelta(days=21)
 
 
 class DevelopmentConfig(Config):

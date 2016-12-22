@@ -21,7 +21,7 @@ def register_extensions(app):
     alembic.init_app(app)
 
 def register_blueprints(app):
-    app.register_blueprint(api_bp, url_prefix='/')
+    app.register_blueprint(api_bp, url_prefix='')
 
 def create_app():
     app = Flask(
