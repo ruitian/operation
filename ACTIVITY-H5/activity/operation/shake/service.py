@@ -152,7 +152,7 @@ class ShakeService(object):
         # 开始向后台接口发起请求的时间
         start_time = time.time()
         try:
-            resp = json.loads(urllib2.urlopen(url, timeout=15).read())
+            resp = json.loads(urllib2.urlopen(url, timeout=10).read())
         except Exception, e:
             print str(e)
         else:
