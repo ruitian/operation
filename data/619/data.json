@@ -51,12 +51,11 @@
       "desc": "四等奖"
     }
   ],
-  "show_prizes": [
-    {
-      "item": 0,
-      "type": 2
-    }
-  ],
+  "show_prizes": {
+    "type": "2",
+    "item_min":"10",
+    "item_max":"100"
+  },
   "result": {
     "success": {
       "tip": "厉害了我的老板",

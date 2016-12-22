@@ -127,26 +127,25 @@ class ShakeService(object):
         with open(file_folder + '/data.json') as static_file:
             data = json.load(static_file)
 
+        prizes = data['show_prizes']
         # 展示将品奖配置
+        url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
+              '?activity_id=%s&type=%s&item_min=%s&item_max=%s' % (
+                  activity_id, prizes['type'], prizes['item_min'], prizes['item_max'])
+        resp, timestamp = self._request_url(url)
 
-        for prize in data['show_prizes']:
-            url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
-                  '?activity_id=%s&type=%s&item=%s' % (activity_id, prize['type'], prize['item'])
-            resp, timestamp = self._request_url(url)
 
-
-            for prize in resp['list']:
-                show_prize = {
-                    'time': int(prize['time']),
-                    'phone': prize['cellphone'],
-                    'name': prize['name'],
-                    'prize': ''
-                }
-                for prize_info in data['prize']:
-                    if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
-                        show_prize['prize'] = prize_info['name']
-                show_prizes.append(show_prize)
-
+        for prize in resp['list']:
+            show_prize = {
+                'time': int(prize['time']),
+                'phone': prize['cellphone'],
+                'name': prize['name'],
+                'prize': ''
+            }
+            for prize_info in data['prize']:
+                if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
+                    show_prize['prize'] = prize_info['name']
+            show_prizes.append(show_prize)
         return show_prizes
 
     def _request_url(self, url):
