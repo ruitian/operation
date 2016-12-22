@@ -64,6 +64,10 @@ class ShakeService(object):
         url = app.config['SERVICE_URL'] + SHAKE_PLAY_URL +\
               '?activity_id=%s&uid=%s' % (activity_id, uid)
         resp, timestamp = self._request_url(url)
+        print resp
+        # got = 1 =>  抽到奖品
+        # got = 2 =>  没有抽到奖品
+        # got = 3 =>  根据draw返回信息
         if 'got' in resp and resp['got']:
             type = resp['prize']['type']
             item = resp['prize']['item']
@@ -81,9 +85,20 @@ class ShakeService(object):
                         'desc': prize['desc']
                     }
                     return prize_info, timestamp
-        if 'draw' in resp and resp['draw'] == 2:
+        elif 'draw' in resp and resp['draw'] == 2:
             prize_info = {
-                'got': 3
+                'got': 3,
+                'msg': u'今日抽奖次数已用完'
+            }
+        elif 'draw' in resp and resp['draw'] == 1:
+            prize_info = {
+                'got': 3,
+                'msg': u'抽奖时间已结束'
+            }
+        elif 'draw' in resp and resp['draw'] == 3:
+            prize_info = {
+                'got': 3,
+                'msg': u'您所在区域不能参与抽奖'
             }
         else:
             prize_info = {
