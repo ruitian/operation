@@ -112,6 +112,8 @@ def _get_param():
     if user_info is None:
         return BaseAction.jsonify_with_data('', RETStatus.TOKEN_ERROR)
     # 解析token后，获取uid
+    if type(user_info) != dict:
+        raise 'user_info Type Error'
     uid = user_info['useraccount']['uid']
     # 验证参数中的值是否为空
     if len(activity_id) == 0 or len(token) == 0:

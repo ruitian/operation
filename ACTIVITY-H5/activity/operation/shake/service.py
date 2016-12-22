@@ -33,6 +33,8 @@ class ShakeService(object):
             # 添加一些额外的信息
             # 用户抽奖的信息
             user_draw_info, timestamp = self.get_user_draw_info(activity_id, uid)
+            if type(user_draw_info) != dict:
+                raise 'user_draw_info Type Error'
             if user_draw_info['activity'] == 'yes':
                 data['user_info'] = {
                     "today_times": user_draw_info['today_shake_times'],
