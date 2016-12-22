@@ -23,6 +23,6 @@ class RETStatus:
     FORGET_PARAM = (2001, '又漏什么参数了?')
     EXPIRE = (2002, '项目已下线')
     NO_ACTIVITY = (2003, '没有该活动!')
-    TOKEN_ERROR = (2004, 'token验证失败')
+    TOKEN_ERROR = (-1000, 'token验证失败')
     TOKEN_NONE = (-1000, 'token为空')
     ACTIVITY_NONE = (-1001, '活动id为空')
