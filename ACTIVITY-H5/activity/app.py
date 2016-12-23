@@ -3,7 +3,7 @@ import os
 
 from config import config
 from flask import Flask
-from main.common import db, alembic
+from main.common import db, alembic, redis
 from operation import activity as activity_bp
 from werkzeug.wsgi import SharedDataMiddleware
 
@@ -19,6 +19,7 @@ def configure_app(app, config_name):
 def register_extensions(app):
     db.init_app(app)
     alembic.init_app(app)
+    redis.init_app(app)
 
 
 def register_blueprints(app):

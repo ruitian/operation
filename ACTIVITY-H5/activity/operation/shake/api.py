@@ -2,8 +2,10 @@
 from flask import request, current_app, json, make_response
 
 from ..base_operation import activity
-from .. import BaseAction, RETStatus
+from .. import BaseAction, RETStatus, redis
 from .service import ShakeService
+
+import base64
 
 @activity.route('/check_token', methods=['GET', 'POST'])
 def check():
@@ -109,15 +111,24 @@ def _get_param():
             # 验证活动id是否为空
             if len(activity_id) == 0:
                 return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
-    # 验证token
-    user_info = BaseAction.check_token(token)
-    if user_info is None:
-        return BaseAction.jsonify_with_data('', RETStatus.TOKEN_ERROR)
-    # 解析token后，获取uid
-    if type(user_info) != dict:
-        raise 'user_info Type Error'
-    uid = user_info['useraccount']['uid']
+
     # 验证参数中的值是否为空
     if len(activity_id) == 0 or len(token) == 0:
         return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
+
+    # 查找缓存中是否有用户信息数据
+    token_base64 = base64.b64encode(token)
+    uid = redis.hget(token_base64, 'user_info')
+    if uid is None:
+        # 验证token
+        user_info = BaseAction.check_token(token)
+        if user_info is None:
+            return BaseAction.jsonify_with_data('', RETStatus.TOKEN_ERROR)
+        # 解析token后，获取uid
+        if type(user_info) != dict:
+            raise 'user_info Type Error'
+        uid = user_info['useraccount']['uid']
+        # 将uid写入缓存，缓存过期时间为3天
+        redis.hset(token_base64, 'user_info', uid)
+        redis.expire(token_base64, 259200)
     return [activity_id, uid, token]

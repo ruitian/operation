@@ -22,7 +22,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # 后端服务根URL
-    SERVICE_URL = 'http://zs.market-api.wmdev2.lsh123.com'
+    SERVICE_URL = 'http://qa.market-api.wmdev2.lsh123.com'
     # 抽奖活动信息URL
     ACTIVITY_INFO_URL = SERVICE_URL + '/Operate/prize/getprizeinfo'
     # 抽奖根URL
@@ -43,10 +43,8 @@ class DevelopmentConfig(Config):
     DEBUG = True
     # mysql
     SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost/active'
-    # mongodb
-    MONGO_HOST = '127.0.0.1'
-    MONGO_PORT = 27017
-    MONGO_DBNAME = 'cms'
+    # redis
+    REDIS_URL = 'redis://localhost:6379/0'
 
 
 class TestingConfig(Config):
