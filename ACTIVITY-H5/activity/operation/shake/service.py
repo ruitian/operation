@@ -4,6 +4,7 @@ import urllib2
 import os
 import time
 import random
+import pickle
 
 from .. import redis
 __all__ = ['ShakeService']
@@ -138,8 +139,8 @@ class ShakeService(object):
     def _get_prize_shake_infos(self, activity_id):
 
         # 缓存中获取展示的中奖信息
-        show_prizes = redis.hget('show_prizes', 'show_prizes')
-        if show_prizes is None:
+        show_prizes_pickle = redis.hget('show_prizes', 'show_prizes')
+        if show_prizes_pickle is None:
             # 展示奖品列表
             show_prizes = []
             # 获取配置信息
@@ -166,8 +167,10 @@ class ShakeService(object):
                     if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
                         show_prize['prize'] = prize_info['name']
                 show_prizes.append(show_prize)
-            show_pries = redis.hset('show_prizes', 'show_prizes', show_prizes)
+            show_prizes_pickle = pickle.dumps(show_prizes)
+            show_prizes = redis.hset('show_prizes', 'show_prizes', show_prizes_pickle)
             redis.expire('show_prizes', 600)
+        show_prizes = pickle.loads(show_prizes_pickle)
         return show_prizes
 
     def _request_url(self, url):
