@@ -28,9 +28,11 @@ def shake():
 @activity.route('/shake/static', methods=['GET', 'POST'])
 def get_shake_static_data():
     shake_service = ShakeService()
-    if type(_get_param()) == tuple:
-        return _get_param()
-    activity_id, uid, token = _get_param()
+    # 参数异常返回
+    params = _get_param()
+    if type(params) == tuple:
+        return params
+    activity_id, uid, token = params
     # 获取静态数据
     static_resp, timestamp = shake_service.get_static_data(activity_id, uid)
     static_resp = json.loads(static_resp)
