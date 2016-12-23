@@ -14,12 +14,9 @@ class BaseAction(object):
         start_time = time.time()
         urllib2_log = current_app.config['LOG_FILE'] + 'urllib2.log'
 
-        data = urllib.urlencode({
-            'token': token
-        })
         try:
-            url = current_app.config['SERVICE_URL'] + '/account/user/tokenlogin'
-            resp = json.loads(urllib2.urlopen(url, data=data, timeout=15).read())
+            url = current_app.config['SERVICE_URL'] + '/account/user/tokenlogin?token=%s'%token
+            resp = json.loads(urllib2.urlopen(url, timeout=10).read())
             # 请求时间
 
         except Exception, e:
