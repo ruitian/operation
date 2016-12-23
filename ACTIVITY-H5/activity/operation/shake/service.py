@@ -4,6 +4,8 @@ import urllib2
 import os
 import time
 import random
+
+from .. import redis
 __all__ = ['ShakeService']
 
 # 获取抽奖次数的url
@@ -135,32 +137,37 @@ class ShakeService(object):
     # 获取一等奖中奖信息
     def _get_prize_shake_infos(self, activity_id):
 
-        # 展示奖品列表
-        show_prizes = []
-        # 获取配置信息
-        file_folder = app.config['DATA_JSON']+activity_id
-        with open(file_folder + '/data.json') as static_file:
-            data = json.load(static_file)
+        # 缓存中获取展示的中奖信息
+        show_prizes = redis.hget('show_prizes', 'show_prizes')
+        if show_prizes is None:
+            # 展示奖品列表
+            show_prizes = []
+            # 获取配置信息
+            file_folder = app.config['DATA_JSON']+activity_id
+            with open(file_folder + '/data.json') as static_file:
+                data = json.load(static_file)
 
-        prizes = data['show_prizes']
-        # 展示将品奖配置
-        url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
-              '?activity_id=%s&type=%s&item_min=%s&item_max=%s' % (
-                  activity_id, prizes['type'], prizes['item_min'], prizes['item_max'])
-        resp, timestamp = self._request_url(url)
+            prizes = data['show_prizes']
+            # 展示将品奖配置
+            url = app.config['SERVICE_URL'] + SHAKE_Shake_Infos_URL + \
+                  '?activity_id=%s&type=%s&item_min=%s&item_max=%s' % (
+                      activity_id, prizes['type'], prizes['item_min'], prizes['item_max'])
+            resp, timestamp = self._request_url(url)
 
 
-        for prize in resp['list']:
-            show_prize = {
-                'time': int(prize['time']),
-                'phone': prize['cellphone'],
-                'name': prize['name'],
-                'prize': ''
-            }
-            for prize_info in data['prize']:
-                if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
-                    show_prize['prize'] = prize_info['name']
-            show_prizes.append(show_prize)
+            for prize in resp['list']:
+                show_prize = {
+                    'time': int(prize['time']),
+                    'phone': prize['cellphone'],
+                    'name': prize['name'],
+                    'prize': ''
+                }
+                for prize_info in data['prize']:
+                    if prize['item'] == prize_info['item'] and prize['type'] == prize['type']:
+                        show_prize['prize'] = prize_info['name']
+                show_prizes.append(show_prize)
+            show_pries = redis.hset('show_prizes', 'show_prizes', show_prizes)
+            redis.expire('show_prizes', 600)
         return show_prizes
 
     def _request_url(self, url):
