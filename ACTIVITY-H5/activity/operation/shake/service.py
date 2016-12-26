@@ -139,7 +139,7 @@ class ShakeService(object):
     def _get_prize_shake_infos(self, activity_id):
 
         # 缓存中获取展示的中奖信息
-        show_prizes_pickle = redis.hget('show_prizes', 'show_prizes')
+        show_prizes_pickle = redis.hget('show_prizes', activity_id)
         if show_prizes_pickle is None:
             # 展示奖品列表
             show_prizes = []
@@ -168,7 +168,7 @@ class ShakeService(object):
                         show_prize['prize'] = prize_info['name']
                 show_prizes.append(show_prize)
             show_prizes_pickle = pickle.dumps(show_prizes)
-            show_prizes = redis.hset('show_prizes', 'show_prizes', show_prizes_pickle)
+            show_prizes = redis.hset('show_prizes', activity_id, show_prizes_pickle)
             redis.expire('show_prizes', 600)
         show_prizes = pickle.loads(show_prizes_pickle)
         return show_prizes
