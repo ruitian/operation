@@ -21,7 +21,7 @@ def _is_user_login(file_folder):
         extend = data['extend']
         return extend['needLogin'], extend['checkZone']
 
-def _check_params():
+def _check_and_get_params():
 
     if request.method == 'POST':
         if not request.form.has_key('activity_id'):

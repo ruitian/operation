@@ -4,7 +4,7 @@ from flask import request, json, make_response
 from ..base_operation import activity
 from .. import BaseAction, RETStatus
 from .service import ShakeService
-from ..base_operation import _check_params
+from ..base_operation import _check_and_get_params
 
 
 @activity.route('/check_token', methods=['GET', 'POST'])
@@ -43,9 +43,9 @@ def get_shake_static_data(params):
 @activity.route('/shake/play', methods=['GET', 'POST'])
 def shake_play():
     shake_service = ShakeService()
-    if type(_check_params()) == tuple:
-        return _check_params()
-    activity_id, uid, token = _check_params()
+    if type(_check_and_get_params()) == tuple:
+        return _check_and_get_params()
+    activity_id, uid, token = _check_and_get_params()
     # 获取抽奖结果
    
     play_resp, timestamp = shake_service.shake_play(activity_id, uid)
@@ -54,9 +54,9 @@ def shake_play():
 @activity.route('/shake/my', methods=['GET', 'POST'])
 def get_my_prize():
     shake_service = ShakeService()
-    if type(_check_params()) == tuple:
-        return _check_params()
-    activity_id, uid, token = _check_params()
+    if type(_check_and_get_params()) == tuple:
+        return _check_and_get_params()
+    activity_id, uid, token = _check_and_get_params()
     my_prize, timestamp = shake_service.get_my_prize(activity_id, uid)
     if my_prize is None:
         return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY, timestamp=timestamp)

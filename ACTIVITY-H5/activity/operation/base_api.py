@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from .base_operation import _check_params
+from .base_operation import _check_and_get_params
 from .shake import get_shake_static_data
 from .sku import get_sku_static_data
 from .. import BaseAction, APIStatus, RETStatus
@@ -29,7 +29,7 @@ def not_found(error):
 # 活动的通用入口
 @activity.route('/static', methods=['GET', 'POST'])
 def common_static_info():
-    params = _check_params()
+    params = _check_and_get_params()
     if type(params) == tuple:
         return params
     activity_id, uid, token = params

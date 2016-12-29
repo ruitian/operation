@@ -4,8 +4,6 @@ from flask import json, make_response
 from ..base_operation import activity
 from .. import BaseAction, RETStatus
 from .service import SkuService
-from ..base_operation import _check_params
-
 
 @activity.route('/sku/static', methods=['GET', 'POST'])
 def get_sku_static_data(params):
