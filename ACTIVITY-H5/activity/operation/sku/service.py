@@ -6,7 +6,7 @@ __all__ = ['SkuService']
 
 
 class SkuService(object):
-    def get_static_data(self, activity_id, uid):
+    def get_static_data(self, activity_id):
         file_folder = app.config['DATA_JSON']+activity_id
         if os.path.exists(file_folder):
             with open(file_folder+'/data.json') as static_file:

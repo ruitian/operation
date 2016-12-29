@@ -2,7 +2,7 @@
 import base64
 import os
 from flask import (
-    Blueprint, request)
+    Blueprint, request, current_app as app, json)
 
 from .. import BaseAction, RETStatus, redis
 
@@ -10,53 +10,52 @@ from .. import BaseAction, RETStatus, redis
 __all__ = ['activity']
 
 activity = Blueprint('activity', __name__)
+false = False
+true = True
 
+# 根据配置确定此活动是否需要用户登录
+def _is_user_login(file_folder):
 
-def _get_param():
-    # 在cookie中获取token
-    token = request.cookies.get('token')
-    # 判断cookie是否含有token
-    if token is None:
-        if request.method == 'POST':
-            # 验证请求参数的个数
-            if len(request.form) != 2:
-                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
-            activity_id = request.form['activity_id']
-            token = request.form['token']
-            # 验证参数是否为空
-            if len(token) == 0:
-                return BaseAction.jsonify_with_data('', RETStatus.TOKEN_NONE)
-            if len(activity_id) == 0:
-                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
+    with open(file_folder+'/data.json') as static_data:
+        data = json.load(static_data)
+        extend = data['extend']
+        return extend['needLogin'], extend['checkZone']
 
-        else:
-            if len(request.args) != 2:
-                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
-            activity_id = request.args.get('activity_id')
-            token = request.args.get('token')
-            # 验证参数是否为空
-            if len(token) == 0:
-                return BaseAction.jsonify_with_data('', RETStatus.TOKEN_NONE)
-            if len(activity_id) == 0:
-                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
+def _check_params():
 
-
-    # cookie中含有token只获取activity_id
+    if request.method == 'POST':
+        if not request.form.has_key('activity_id'):
+            return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
+        activity_id = request.form['activity_id']
     else:
-        if request.method == "POST":
-            activity_id = request.form['activity_id']
-            # 验证活动id是否为空
-            if len(activity_id) == 0:
-                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
-        else:
-            activity_id = request.args.get('activity_id')
-            # 验证活动id是否为空
-            if len(activity_id) == 0:
-                return BaseAction.jsonify_with_data('', RETStatus.ACTIVITY_NONE)
+        if not request.args.has_key('activity_id'):
+            return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
+        activity_id = request.args.get('activity_id')
+    # 判断是否有这个活动
+    file_folder = app.config['DATA_JSON'] + activity_id
+    if not os.path.exists(file_folder):
+        return BaseAction.jsonify_with_data('', RETStatus.NO_ACTIVITY)
+    is_login_user, is_check_zone = _is_user_login(file_folder)
 
-    # 验证参数中的值是否为空
-    if len(activity_id) == 0 or len(token) == 0:
-        return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
+    # 需要用户登录，继续验证token
+    token = request.cookies.get('token')
+    # cookie 没有token
+    if not is_login_user:
+        return [activity_id, None, None]
+
+    elif is_login_user and token is None:
+        if request.method == 'POST':
+            if not request.form.has_key('token'):
+                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
+            token = request.form['token']
+        else:
+            if not request.args.has_key('token'):
+                return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
+            token = request.args.get('token')
+    # cookie 含有token
+    elif is_login_user and token is not None:
+        if len(token) == 0:
+            return BaseAction.jsonify_with_data('', RETStatus.PARMA_ERROR)
 
     # 查找缓存中是否有用户信息数据
     token_base64 = base64.b64encode(token)
