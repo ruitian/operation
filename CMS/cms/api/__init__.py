@@ -28,14 +28,4 @@ def jsonify_with_data(args, ret=None, status=None, timestamp=None):
     return jsonify(resp), status[0]
 
 
-@bp.errorhandler(400)
-def bad_request(error):
-    return jsonify_with_error(APIStatus.BAD_REQUEST)
-
-
-@bp.errorhandler(404)
-def not_found(error):
-    return jsonify_with_error(APIStatus.NOT_FOUND)
-
 from .operation import *
-from .user import *

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from flask import Flask
+from werkzeug.wsgi import SharedDataMiddleware
 
 from cms.config import config
 from cms.extensions import db
@@ -28,6 +29,9 @@ def create_app():
         __name__,
         template_folder=os.path.join(project_path, 'static/static')
     )
+    app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
+        '/': os.path.join(project_path, 'static')
+    })
     configure_app(app, config_name=None)
     register_extensions(app)
     register_blueprints(app)
