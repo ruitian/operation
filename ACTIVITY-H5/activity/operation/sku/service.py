@@ -43,7 +43,6 @@ class SkuService(object):
                         "skuList": sku_infos,
                         "banner": sku_list['banner'],
                         "name": sku_list['name'],
-                        "titleImg": sku_list['titleImg'],
                         "hotSale": sku_list['hotSale'],
                         "prize_list": sku_list['prize_list']
                     }
@@ -52,7 +51,6 @@ class SkuService(object):
                         "skuList": sku_infos,
                         "banner": sku_list['banner'],
                         "name": sku_list['name'],
-                        "titleImg": sku_list['titleImg'],
                         "hotSale": sku_list['hotSale']
                     }
                 modules.append(moudle_info)
