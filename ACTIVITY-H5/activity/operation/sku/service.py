@@ -17,13 +17,15 @@ class SkuService(object):
             with open(file_folder+'/data.json') as static_file:
                 data = json.load(static_file)
             modules = []
-            for index, sku_list in enumerate(data['modules']):
+            for sku_list in data['modules']:
                 sku_infos = []
+                # 请求接口的参数
                 skus = sku_list['skuList']
                 url = '{0}{1}?sku_ids={2}'.format(
                     app.config['SERVICE_URL'], GET_GOODS, json.dumps(skus)
                 )
                 resp, timestamp = self._request_url(url)
+                # 循环列表，用商品id来检索信息
                 for sku in skus:
                     if resp.has_key(str(sku['sku_id'])):
                         sku_info = resp[str(sku['sku_id'])]
@@ -33,14 +35,27 @@ class SkuService(object):
                             "sale_price": sku_info['sale_price'],
                             "img_list": sku_info['img_list']
                         }
+                    # 一个模块中的商品列表
                     sku_infos.append(info)
-                    print len(sku_infos)
-                jsons = {
-                    "skuList": sku_infos,
-                    "banner": sku_list['banner'],
-                    "banner_name": sku_list['name']
-                }
-                modules.append(jsons)
+                # 每个模块包含的信息
+                if sku_list.has_key('prize_list'):
+                    moudle_info = {
+                        "skuList": sku_infos,
+                        "banner": sku_list['banner'],
+                        "name": sku_list['name'],
+                        "titleImg": sku_list['titleImg'],
+                        "hotSale": sku_list['hotSale'],
+                        "prize_list": sku_list['prize_list']
+                    }
+                else:
+                    moudle_info = {
+                        "skuList": sku_infos,
+                        "banner": sku_list['banner'],
+                        "name": sku_list['name'],
+                        "titleImg": sku_list['titleImg'],
+                        "hotSale": sku_list['hotSale']
+                    }
+                modules.append(moudle_info)
             data['modules'] = modules
             return json.dumps(data), timestamp
         else:
