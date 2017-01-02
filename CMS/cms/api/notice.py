@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from . import bp, jsonify_with_data
 from cms.service import NoticeService
+from cms.libs.pagination import to_pagination_with_next_url
 from flask import request, json
 
 
@@ -12,3 +13,13 @@ def notice_upload():
     if resp is not None:
         data = {'origin': resp['origin']}
         return jsonify_with_data(data, timestamp=timestamp)
+
+
+@bp.route('/notice/list', methods=['GET', 'POST'])
+def notice_list():
+    notice_service = NoticeService()
+    offset = request.args.get('offset', 0, type=int)
+    limit = request.args.get('limit', 20, type=int)
+    notices = notice_service.get_notice_list(offset, limit)
+    paging = to_pagination_with_next_url(offset, limit, len(notices))
+    return jsonify_with_data(notices, paging=paging)

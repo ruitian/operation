@@ -20,12 +20,15 @@ class RETStatus:
     PASSWD_ERROR = (1000, '密码错误')
     UPLOAD_FAILE = (-1000, '上传失败')
 
-def jsonify_with_data(args, ret=None, status=None, timestamp=None):
+def jsonify_with_data(args, ret=None, status=None, timestamp=None, paging=None):
     if ret is None:
         ret = RETStatus.OK
     if status is None:
         status = APIStatus.OK
-    resp = {'content': args, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
+    if paging is None:
+        resp = {'content': args, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
+    else:
+        resp = {'content': args, 'paging': paging, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
     return jsonify(resp), status[0]
 
 

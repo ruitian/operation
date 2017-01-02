@@ -22,5 +22,12 @@ class NoticeModel(db.Model):
         server_default=db.func.current_timestamp()
     )
 
+    def to_dict(self):
+        return dict(
+            id=self.id,
+            img_id=self.img_id,
+            img_url=self.img_url,
+            name=self.name
+        )
     def __repr__(self):
         return '<%s >' % self.name

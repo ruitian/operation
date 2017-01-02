@@ -62,5 +62,7 @@ class NoticeService(object):
         else:
             return True
 
-    def get_notice_list(self):
-        pass
+    def get_notice_list(self, offset, limit):
+        notices = (NoticeModel.query.order_by(NoticeModel.create_at.desc())\
+            .all().offset(offset).limit(limit))
+        return [notice.to_dict for notice in notices]
