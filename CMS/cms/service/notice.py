@@ -64,5 +64,8 @@ class NoticeService(object):
 
     def get_notice_list(self, offset, limit):
         notices = (NoticeModel.query.order_by(NoticeModel.create_at.desc())\
-            .all().offset(offset).limit(limit))
+            .offset(offset).limit(limit).all())
         return [notice.to_dict for notice in notices]
+
+    def count_all(self):
+        return NoticeModel.query.count()

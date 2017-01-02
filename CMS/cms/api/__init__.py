@@ -27,7 +27,7 @@ def jsonify_with_data(args, ret=None, status=None, timestamp=None, paging=None):
         status = APIStatus.OK
     if paging is None:
         resp = {'content': args, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
-    else:
+    if paging is not None:
         resp = {'content': args, 'paging': paging, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
     return jsonify(resp), status[0]
 

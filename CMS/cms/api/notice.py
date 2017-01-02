@@ -21,5 +21,5 @@ def notice_list():
     offset = request.args.get('offset', 0, type=int)
     limit = request.args.get('limit', 20, type=int)
     notices = notice_service.get_notice_list(offset, limit)
-    paging = to_pagination_with_next_url(offset, limit, len(notices))
+    paging = to_pagination_with_next_url(offset, limit, notice_service.count_all())
     return jsonify_with_data(notices, paging=paging)

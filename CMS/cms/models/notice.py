@@ -29,5 +29,3 @@ class NoticeModel(db.Model):
             img_url=self.img_url,
             name=self.name
         )
-    def __repr__(self):
-        return '<%s >' % self.name
