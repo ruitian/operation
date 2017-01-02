@@ -18,14 +18,16 @@ class RETStatus:
     TIME_OUT = (1, '请求超时，请稍后重试')
     REQUEST_TIME_OUT = (1001, '网络请求超时')
     PASSWD_ERROR = (1000, '密码错误')
+    UPLOAD_FAILE = (-1000, '上传失败')
 
 def jsonify_with_data(args, ret=None, status=None, timestamp=None):
     if ret is None:
         ret = RETStatus.OK
     if status is None:
         status = APIStatus.OK
-    resp = {'content': args, 'msg': ret[1], 'ret': ret[0], timestamp:timestamp}
+    resp = {'content': args, 'msg': ret[1], 'ret': ret[0], 'timestamp': timestamp}
     return jsonify(resp), status[0]
 
 
 from .operation import *
+from .notice import *
