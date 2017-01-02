@@ -8,6 +8,7 @@ import base64
 import random
 
 from cms.models import NoticeModel
+from cms.extensions import db
 
 __all__ = ['NoticeService']
 
@@ -41,6 +42,8 @@ class NoticeService(object):
         img_id = resp['content']['id']
         img_url = resp['content']['origin']
 
+        self.save_data(img_id, img_url)
+
         if resp['ret'] == 0:
             return resp['content'], resp['timestamp']
         return None
@@ -49,13 +52,13 @@ class NoticeService(object):
         notice = NoticeModel(
             img_id=img_id,
             img_url=img_url,
-            img_name=img_name
+            name=img_name
         )
         try:
             db.session.add(notice)
             db.session.commit()
         except:
-            raise u'数据写入错误'
+            db.session.rollback()
         else:
             return True
 
