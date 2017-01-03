@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint
 from flask import jsonify
-
+from time import time
 bp = Blueprint('api', __name__)
 
 
@@ -21,7 +21,8 @@ class RETStatus:
     UPLOAD_FAILE = (-1000, '上传失败')
     UPDATE_NOTICE_ERROR = (-1000, '添加失败')
 
-def jsonify_with_data(args, ret=None, status=None, timestamp=None, paging=None):
+
+def jsonify_with_data(args, ret=None, status=None, paging=None, timestamp=int(time())):
     if ret is None:
         ret = RETStatus.OK
     if status is None:
