@@ -5,7 +5,7 @@ from werkzeug.wsgi import SharedDataMiddleware
 
 from cms.config import config
 from cms.extensions import db
-from cms.extensions import alembic
+from cms.extensions import migrate
 from cms.api import bp as api_bp
 
 __all__ = ['create_app']
@@ -18,8 +18,7 @@ def configure_app(app, config_name):
 
 def register_extensions(app):
     db.init_app(app)
-    db.init_app(app)
-    alembic.init_app(app)
+    migrate.init_app(app, db)
 
 def register_blueprints(app):
     app.register_blueprint(api_bp, url_prefix='')
