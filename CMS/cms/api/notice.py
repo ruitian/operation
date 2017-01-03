@@ -9,7 +9,7 @@ from flask import request, json
 def notice_upload():
     notice_service = NoticeService()
     upload_pic = request.files['file']
-    resp, timestamp = notice_service.request_upload(upload_pic)
+    resp, timestamp = notice_service.upload_img(upload_pic)
     if resp is not None:
         data = {
             'origin': resp['origin'],
@@ -26,7 +26,7 @@ def add_notice():
         img_id = request.form['img_id']
     else:
         name = request.args.get('name')
-        img_id = request.args.get('img_url')
+        img_id = request.args.get('img_id')
     notice_service = NoticeService()
     resp = notice_service.update_notice(name, img_id)
     if resp is None:
