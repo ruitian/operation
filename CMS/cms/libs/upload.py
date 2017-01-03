@@ -35,6 +35,6 @@ def upload_file(file):
     return None
 
 
-def allow_file(self, filename):
+def allow_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] \
                                in app.config['ALLOWED_EXTENSIONS']
