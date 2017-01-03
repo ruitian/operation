@@ -2,7 +2,9 @@
 import os
 from datetime import timedelta
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '../../'
+    ))
 
 
 class Config(object):
@@ -10,7 +12,7 @@ class Config(object):
     # json upload
     DATA_JSON = BASE_DIR + '/data/'
     LOG_DIR = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), '..'
+        os.path.dirname(__file__), '../log'
     ))
     TEMP_DIR = BASE_DIR + '/data/temp'
     SECRET_KEY = 'NGUzMjc0MjBiYzQxMjkyZTgyZTk5ZTA2MDg2MDU1NDsd'

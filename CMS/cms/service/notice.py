@@ -22,7 +22,7 @@ class NoticeService(object):
         file_url = os.path.join(
             app.config['TEMP_DIR'], file_name
         )
-        file.save(file_url)
+        pic.save(file_url)
 
         register_openers()
         datagen, headers = multipart_encode({"fileUp": open(file_url, 'rb')})
