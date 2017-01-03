@@ -11,7 +11,10 @@ def notice_upload():
     text = json.loads(request.data)['base64']
     resp, timestamp = notice_service.request_upload(text)
     if resp is not None:
-        data = {'origin': resp['origin']}
+        data = {
+            'origin': resp['origin'],
+            'img_id': resp['id']
+        }
         return jsonify_with_data(data, timestamp=timestamp)
 
 
