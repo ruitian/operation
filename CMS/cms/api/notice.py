@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from . import bp, jsonify_with_data
+from . import bp, jsonify_with_data, RETStatus
 from cms.service import NoticeService
 from cms.libs.pagination import to_pagination_with_next_url
 from flask import request, json
@@ -17,6 +17,20 @@ def notice_upload():
         }
         return jsonify_with_data(data, timestamp=timestamp)
 
+@bp.route('/notice/add', methods=['GET', 'POST'])
+def add_notice():
+    if request.method == 'POST':
+        name = request.form['name']
+        img_id = request.form['img_id']
+    else:
+        name = request.args.get('name')
+        img_id = request.args.get('img_url')
+    notice_service = NoticeService()
+    resp = notice_service.update_notice(name, img_id)
+    if resp is None:
+        return jsonify_with_data('', RETStatus.UPDATE_NOTICE_ERROR)
+    else:
+        return jsonify_with_data('')
 
 @bp.route('/notice/list', methods=['GET', 'POST'])
 def notice_list():

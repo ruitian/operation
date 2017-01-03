@@ -69,3 +69,13 @@ class NoticeService(object):
 
     def count_all(self):
         return NoticeModel.query.count()
+
+    def update_notice(self, name, img_id):
+        notice = NoticeModel.query.filter_by(img_id=img_id).first()
+        if notice is None:
+            return None
+        else:
+            notice.name = name
+            db.session.add(notice)
+            db.session.commit()
+            return True

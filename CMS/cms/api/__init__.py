@@ -19,6 +19,7 @@ class RETStatus:
     REQUEST_TIME_OUT = (1001, '网络请求超时')
     PASSWD_ERROR = (1000, '密码错误')
     UPLOAD_FAILE = (-1000, '上传失败')
+    UPDATE_NOTICE_ERROR = (-1000, '添加失败')
 
 def jsonify_with_data(args, ret=None, status=None, timestamp=None, paging=None):
     if ret is None:
