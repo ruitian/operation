@@ -9,8 +9,7 @@ from flask import request, json
 def notice_upload():
     notice_service = NoticeService()
     upload_pic = request.files['file']
-    text = json.loads(request.data)['base64']
-    resp, timestamp = notice_service.request_upload(text)
+    resp, timestamp = notice_service.request_upload(upload_pic)
     if resp is not None:
         data = {
             'origin': resp['origin'],
