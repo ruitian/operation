@@ -12,7 +12,7 @@ class Config(object):
     LOG_DIR = os.path.abspath(os.path.join(
         os.path.dirname(__file__), '..'
     ))
-
+    TEMP_DIR = BASE_DIR + '/data/temp'
     SECRET_KEY = 'NGUzMjc0MjBiYzQxMjkyZTgyZTk5ZTA2MDg2MDU1NDsd'
 
     WTF_CSRF_ENABLED = False

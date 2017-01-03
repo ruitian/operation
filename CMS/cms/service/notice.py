@@ -16,27 +16,23 @@ __all__ = ['NoticeService']
 class NoticeService(object):
 
     upload_uri = '/res/img/upload?scene=common'
-    def request_upload(self, text):
-        split_text = text.split(';')
-        file_type = split_text[0].split('/')[1]
+    def request_upload(self, pic):
+        file_type = pic.filename.split('.')[1]
         file_name = '.'.join([str(random.randint(6, 1000000)), file_type])
-
-        image_text = split_text[1].split(',')[1]
-        img_data = base64.b64decode(image_text)
-
-        file = open(file_name, 'wb')
-        file.write(img_data)
-        file.close()
+        file_url = os.path.join(
+            app.config['TEMP_DIR'], file_name
+        )
+        file.save(file_url)
 
         register_openers()
-        datagen, headers = multipart_encode({"fileUp": open(file_name, 'rb')})
+        datagen, headers = multipart_encode({"fileUp": open(file_url, 'rb')})
 
         url = '{0}{1}'.format(app.config['SERVICE_URL'], self.upload_uri)
         request = urllib2.Request(
             url,
             datagen, headers)
         # 删除图片
-        os.remove(file_name)
+        os.remove(file_url)
         resp = json.loads(urllib2.urlopen(request).read())
 
         img_id = resp['content']['id']
