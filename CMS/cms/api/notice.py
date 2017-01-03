@@ -16,6 +16,8 @@ def notice_upload():
             'img_id': resp['id']
         }
         return jsonify_with_data(data, timestamp=timestamp)
+    else:
+        return jsonify_with_data('', RETStatus.UPDATE_NOTICE_ERROR)
 
 @bp.route('/notice/add', methods=['GET', 'POST'])
 def add_notice():

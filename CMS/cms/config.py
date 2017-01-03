@@ -15,6 +15,8 @@ class Config(object):
         os.path.dirname(__file__), '../log'
     ))
     TEMP_DIR = BASE_DIR + '/data/temp'
+    ALLOWED_EXTENSIONS = set(['jpg', 'png', 'doc'])
+    MAX_CONTENT_LENGTH = 5 * 1024 * 1024
     SECRET_KEY = 'NGUzMjc0MjBiYzQxMjkyZTgyZTk5ZTA2MDg2MDU1NDsd'
 
     WTF_CSRF_ENABLED = False
