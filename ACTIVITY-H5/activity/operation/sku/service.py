@@ -33,7 +33,9 @@ class SkuService(object):
                             "sku_id": sku_info['sku_id'],
                             "name": sku_info['name'],
                             "sale_price": sku_info['sale_price'],
-                            "img_list": sku_info['img_list']
+                            "img_list": sku_info['img_list'],
+                            "sale_unit": sku_info['sale_unit'],
+                            "sale_unit_name": sku_info['sale_unit_name']
                         }
                     # 一个模块中的商品列表
                     sku_infos.append(info)
